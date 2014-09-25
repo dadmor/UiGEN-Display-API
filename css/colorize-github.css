@@ -1,0 +1,90 @@
+/**
+ * GitHub theme
+ *
+ * @author Craig Campbell
+ * @version 1.0.4
+ */
+.panel pre {
+    border: none;
+    word-wrap: break-word;
+    padding: 6px 10px;
+    line-height: 19px;
+    background-color:#eee !important;
+    
+}
+
+code {
+    border: 1px solid #eaeaea;
+    margin: 0px 2px;
+    padding: 0px 5px;
+    font-size:12px !important;
+}
+
+.panel pre code {
+    border: 0px;
+    padding: 0px;
+    margin: 0px;
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+}
+
+.panel pre, code {
+    font-family: Consolas, 'Liberation Mono', Courier, monospace;
+    color: #333;
+    background: #f8f8f8;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.panel pre, .panel pre code {
+    font-size: 13px;
+}
+
+.panel pre .comment {
+    color: #998;
+}
+
+.panel pre .support {
+    color: #0086B3;
+}
+
+.panel pre .tag, .panel pre .tag-name {
+    color: navy;
+}
+
+.panel pre .keyword, .panel pre .css-property, .panel pre .vendor-.panel prefix, .panel pre .sass, .panel pre .class, .panel pre .id, .panel pre .css-value, .panel pre .entity.function, .panel pre .storage.function {
+    font-weight: bold;
+}
+
+.panel pre .css-property, .panel pre .css-value, .panel pre .vendor-.panel prefix, .panel pre .support.namespace {
+    color: #333;
+}
+
+.panel pre .constant.numeric, .panel pre .keyword.unit, .panel pre .hex-color {
+    font-weight: normal;
+    color: #099;
+}
+
+.panel pre .entity.class {
+    color: #458;
+}
+
+.panel pre .entity.id, .panel pre .entity.function {
+    color: #900;
+}
+
+.panel pre .attribute, .panel pre .variable {
+    color: teal;
+}
+
+.panel pre .string, .panel pre .support.value  {
+    font-weight: normal;
+    color: #d14;
+}
+
+.panel pre .regexp {
+    color: #009926;
+}
+Status API Training Shop Blog About © 2014 GitHub, Inc. Terms Privacy Security Contact 

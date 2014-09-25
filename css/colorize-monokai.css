@@ -1,0 +1,49 @@
+/**
+ * Kimbie (Light)
+ *
+ * @author Jan T. Sott
+ * @version 1.0.0
+ * @url http://github.com/idleberg/Kimbie-Rainbow
+ */
+.panel pre {
+    background-color: #fbebd4;
+    word-wrap: break-word;
+    margin: 0px;
+    padding: 0px;
+    color: #221a0f;
+    font-size: 14px;
+    margin-bottom: 20px;
+    border:none;
+}
+
+.panel pre, code {
+    font-family: 'Monaco', courier, monospace;
+}
+
+.panel pre .comment {
+    color: #d6baad;
+}
+
+.panel pre .variable.global, .panel pre .variable.class, .panel pre .variable.instance {
+    color: #dc3958; /* red */
+}
+
+.panel pre .constant.numeric, .panel pre .constant.language, .panel pre .constant.hex-color, .panel pre .keyword.unit {
+    color: #f79a32; /* orange */
+}
+
+.panel pre .constant, .panel pre .entity, .panel pre .entity.class, .panel pre .support {
+    color: #f06431; /* yellow */
+}
+
+.panel pre .constant.symbol, .panel pre .string {
+    color: #889b4a; /* green */
+}
+
+.panel pre .entity.function, .panel pre .support.css-property, .panel pre .selector {
+    color: #8ab1b0; /* blue */
+}
+
+.panel pre .keyword, .panel pre .storage {
+    color: #98676a; /* purple */
+}
