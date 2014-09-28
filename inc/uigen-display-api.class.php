@@ -78,7 +78,12 @@ class UiGEN_display_api {
 
 	public function load_data( $args ){
 		$output = array();
+		
+		if( $args['input']['type'] == 'text' ){
 
+			$output = file_get_contents($args['input']['path'] . $args['input']['file']);
+
+		}
 		if( $args['input']['type'] == 'YAML' ){
 
 			require_once realpath(dirname(__FILE__)) . '/Spyc.php';
@@ -108,6 +113,10 @@ class UiGEN_display_api {
 	/* ----------------------------------------------------------------------- */
 	private function outputModel($output, $output_type){
 		
+		if($output_type == 'text'){
+			$output = $output;
+		}
+
 		if($output_type == 'JSON'){
 			$output = json_encode($output);
 		}
@@ -120,8 +129,7 @@ class UiGEN_display_api {
 			$_output .= '</ul>'; 
 			$output = $_output;			
 		}
-
-
+		
 		if($_POST['loaderClass']=='UiGEN_display_api'){
 			echo $output;
 		}
@@ -175,7 +183,8 @@ if($_POST['loaderClass']=='UiGEN_display_api'){
 	$acces_methods = array(
 		'list_dir',
 		'list_files',
-		'load_data'
+		'load_data',
+		'list_tree'
 
 		);
 

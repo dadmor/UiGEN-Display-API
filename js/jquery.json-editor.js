@@ -36,10 +36,15 @@
   You can show a 'w'ipe button that does a more aggressive delete by calling showWipe(true|false) or by passing in 'showWipe: true'.
 */
 
-
-(function() {
+/* change to wordpress comp */
+(function($) {
 
   window.JSONEditor = (function() {
+
+    var jsonDecorators = false;
+    var map_to_schema = false;
+    var filesDecorators = true;
+    var nodeClick = 'load'; // editName load
 
     function JSONEditor(wrapped, options) {
       if (options == null) {
@@ -68,7 +73,14 @@
 
     JSONEditor.prototype.braceUI = function(key, struct) {
       var _this = this;
-      return $('<a class="icon" href="#"><strong>{</strong></a>').click(function(e) {
+/* ---------------------------------------------------------------------------------------------------- */
+      if(jsonDecorators == true){
+        var out = '<a class="icon" href="#"><strong>{</strong></a>';
+      }else{
+        var out = '<a class="icon" href="#"><strong></strong></a>';
+      }
+      return $(out).click(function(e) {
+/* ---------------------------------------------------------------------------------------------------- */
         e.preventDefault();
         struct[key] = {
           "??": struct[key]
@@ -80,7 +92,14 @@
 
     JSONEditor.prototype.bracketUI = function(key, struct) {
       var _this = this;
-      return $('<a class="icon" href="#"><strong>[</a>').click(function(e) {
+/* ---------------------------------------------------------------------------------------------------- */
+      if(jsonDecorators == true){
+        var out = '<a class="icon" href="#"><strong>[</a>';
+      }else{
+        var out = '<a class="icon" href="#"><strong></a>';
+      }
+      return $(out).click(function(e) {
+/* ---------------------------------------------------------------------------------------------------- */
         e.preventDefault();
         struct[key] = [struct[key]];
         _this.doAutoFocus = true;
@@ -90,7 +109,7 @@
 
     JSONEditor.prototype.deleteUI = function(key, struct, fullDelete) {
       var _this = this;
-      return $("<a class='icon' href='#' title='delete'><span style='color:red' class='glyphicon glyphicon-remove-sign'></span> <!--<img src='" + this.DELETE_IMG + "' border=0 />--></a>").click(function(e) {
+      return $("<a class='icon' href='#' title='delete'><span style='color:#FF6E6E' class='glyphicon glyphicon-remove-sign'></span> <!--<img src='" + this.DELETE_IMG + "' border=0 />--></a>").click(function(e) {
         var didSomething, subkey, subval, _ref;
         e.preventDefault();
         if (!fullDelete) {
@@ -138,7 +157,7 @@
 
     JSONEditor.prototype.addUI = function(struct) {
       var _this = this;
-      return $("<a class='icon' href='#' title='add'><span style='color:green' class='glyphicon glyphicon-plus-sign'></span> <!--<img src='" + this.ADD_IMG + "' border=0/>--></a>").click(function(e) {
+      return $("<a class='icon' href='#' title='add'><span style='color:#5FE35F' class='glyphicon glyphicon-plus-sign'></span> <!--<img src='" + this.ADD_IMG + "' border=0/>--></a>").click(function(e) {
         e.preventDefault();
         if (struct instanceof Array) {
           struct.push('??');
@@ -204,15 +223,15 @@
       }
       if (this.functionButtonsEnabled && !this.functionButtons) {
         this.functionButtons = $('<div class="function_buttons"></div>');
-        this.functionButtons.append($('<a href="#" style="padding-right: 10px;">Undo</a>').click(function(e) {
+        this.functionButtons.append($('<a href="#" class="btn btn-default btn-xs" style="margin-right:3px">Undo</a>').click(function(e) {
           e.preventDefault();
           return _this.undo();
         }));
-        this.functionButtons.append($('<a href="#" style="padding-right: 10px;">Redo</a>').click(function(e) {
+        this.functionButtons.append($('<a href="#" class="btn btn-default btn-xs" style="margin-right:3px">Redo</a>').click(function(e) {
           e.preventDefault();
           return _this.redo();
         }));
-        this.functionButtons.append($('<a id="toggle_view" href="#" style="padding-right: 10px; float: right;">Toggle View</a>').click(function(e) {
+        this.functionButtons.append($('<a id="toggle_view" href="#" class="btn btn-default btn-xs" style="margin-right:3px">Object preview</a>').click(function(e) {
           e.preventDefault();
           return _this.toggleBuilder();
         }));
@@ -411,8 +430,8 @@
       if (text.length === 0) {
         return '-empty-';
       }
-      if (this._doTruncation && text.length > (length || 30)) {
-        return text.substring(0, length || 30) + '...';
+      if (this._doTruncation && text.length > (length || 140)) {
+        return text.substring(0, length || 140) + '...';
       }
       return text;
     };
@@ -475,13 +494,52 @@
     JSONEditor.prototype.editable = function(text, key, struct, root, kind) {
       var elem, self;
       self = this;
+
+      /* Click to edit ---------------------------------------------------------------------------------------- */
       elem = $('<span class="editable" href="#"></span>').text(this.truncate(text)).click(function(e) {
-        if (!this.editing) {
-          this.editing = true;
-          self.edit($(this), key, struct, root, kind);
+        
+        /* ---------------------------------------------------------------------------------------------------- */
+        /* NODE CLICK ---------------------------------------------------------------------------------------- */
+        
+        if( nodeClick == 'editName'){ // editName load
+          if (!this.editing) {
+            this.editing = true;
+            self.edit($(this), key, struct, root, kind);
+          }
+          return true;
         }
-        return true;
+
+        if( nodeClick == 'load'){ // editName load          
+          var _this = $(this);
+          var namesArray = [];
+
+          function loop(){
+            _this = _this.parent('blockquote');
+            var node_name = _this.children('div').children('span.editable').text();
+            if(node_name != ''){
+              //alert(node_name);
+              namesArray.push(node_name);
+            }
+            if(_this.prop("tagName") == undefined){
+              return false;
+            }            
+            loop();
+          }
+          _this = _this.closest('blockquote');
+          //namesArray.push(_this.closest('blockquote').children('span').children('span.editable').text());
+          var filename = _this.closest('blockquote').children('span').children('span.editable').text();
+
+          loop();
+          namesArray.reverse();
+          window.JSONEditorPathCallback = JSONEditorPathCallback;
+          window.JSONEditorPathCallback(namesArray,filename);
+        }
+        /* ---------------------------------------------------------------------------------------------------- */
+        /* ---------------------------------------------------------------------------------------------------- */
       });
+
+
+
       return elem;
     };
 
@@ -490,7 +548,13 @@
       elem = null;
       if (json instanceof Array) {
         bq = $(document.createElement("BLOCKQUOTE"));
-        bq.append($('<div class="brackets">[</div>'));
+/* DECORATORS ----------------------------------------------------------------------------------------- */
+        if(jsonDecorators == true){
+          bq.append($('<div class="brackets">[</div>'));
+        }else{
+          bq.append($('<div class="brackets"></div>'));
+        }
+/* ---------------------------------------------------------------------------------------------------- */
         bq.prepend(this.addUI(json));
         if (parent) {
           if (this._showWipe) {
@@ -506,19 +570,38 @@
           }
           bq.append(innerbq);
         }
-        bq.append($('<div class="brackets">]</div>'));
+/* DECORATORS ----------------------------------------------------------------------------------------- */
+        if(jsonDecorators == true){
+          bq.append($('<div class="brackets">]</div>'));
+        }else{
+          bq.append($('<div class="brackets"></div>'));         
+        }
+/* ---------------------------------------------------------------------------------------------------- */
         node.append(bq);
       } else if (json instanceof Object) {
         bq = $(document.createElement("BLOCKQUOTE"));
 
-        bq.append($('<div class="bracers">{</div>'));
-
-        bq.append($('<a style="position:absolute; margin-top:-22px; margin-left:5px" class="btn btn-xs map-to-schema">map to schema </a>'));
+/* DECORATORS ----------------------------------------------------------------------------------------- */
+        if(jsonDecorators == true){
+          bq.append($('<div class="bracers">{</div>'));
+        }else{
+          bq.append($('<div class="bracers"></div>'));
+        }
+        if(map_to_schema == true){
+                bq.append($('<a style="position:absolute; margin-top:-22px; margin-left:5px" class="btn btn-xs map-to-schema">map to schema </a>'));
+        }
+/* ---------------------------------------------------------------------------------------------------- */
 
         for (jsonkey in json) {
           jsonvalue = json[jsonkey];
           innerbq = $(document.createElement("BLOCKQUOTE"));
-          newElem = this.editable(jsonkey.toString(), jsonkey.toString(), json, root, 'key').wrap('<span class="key"></b>').parent();
+/* DECORATORS ----------------------------------------------------------------------------------------- */
+          if(filesDecorators == true){
+            newElem = this.editable(jsonkey.toString(), jsonkey.toString(), json, root, 'key').wrap('<div style="padding-right:5px; color:#F59421" class="glyphicon glyphicon-folder-open">&nbsp;</div><span class="key"></b>').parent();
+          }else{
+            newElem = this.editable(jsonkey.toString(), jsonkey.toString(), json, root, 'key').wrap('<span class="key"></b>').parent();
+          }
+/* ---------------------------------------------------------------------------------------------------- */          
           innerbq.append(newElem);
           if (newElem && newElem.text() === "??") {
             elem = newElem;
@@ -545,10 +628,22 @@
           }
           bq.prepend(this.deleteUI(key, parent));
         }
-        bq.append($('<div class="bracers">}</div>'));
+/* DECORATORS ----------------------------------------------------------------------------------------- */
+        if(jsonDecorators == true){
+          bq.append($('<div class="bracers">}</div>'));
+        }else{
+          bq.append($('<div class="bracers"></div>'));
+        }
+/* ---------------------------------------------------------------------------------------------------- */
         node.append(bq);
       } else {
-        elem = this.editable(json.toString(), key, parent, root, 'value').wrap('<span class="val"></span>').parent();
+/* DECORATORS ----------------------------------------------------------------------------------------- */
+        if(filesDecorators == true){
+          elem = this.editable(json.toString(), key, parent, root, 'value').wrap('<span style="color:#F59421" class="glyphicon glyphicon-file"></span><span class="val"></span>').parent();
+        }else{
+          elem = this.editable(json.toString(), key, parent, root, 'value').wrap('</span><span class="val"></span>').parent();
+        }
+/* ---------------------------------------------------------------------------------------------------- */        
         node.append(elem);
         node.prepend(this.braceUI(key, parent));
         node.prepend(this.bracketUI(key, parent));
@@ -565,9 +660,6 @@
     return JSONEditor;
 
   })();
-
-}).call(this);
-
 
 
 $(document).on('click', ".map-to-schema", function() { 
@@ -610,4 +702,10 @@ $(document).on('click', ".map-to-schema", function() {
 
   init_UiGEN_alpaca("#workspaceModal .modal-body", '', schema, '');
 
-});
+});  
+
+/* change to wordpress comp */
+})(jQuery);
+
+
+
