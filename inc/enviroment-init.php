@@ -3,7 +3,6 @@ $api_uri = plugins_url().'/UiGEN-Display-API';
 ?>
 <link rel="stylesheet" href="<?php echo $api_uri;?>/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="<?php echo $api_uri;?>/bootstrap/css/bootstrap-theme.min.css">
-
 <style type="text/css" media="screen">
 /* Json-editor like a folders tree */
 .builder .icon{float:right;}
@@ -31,7 +30,6 @@ $api_uri = plugins_url().'/UiGEN-Display-API';
 .builder .glyphicon-remove-sign , .builder .glyphicon-plus-sign{margin:1px;}
 .json-editor textarea {width:100%; height:480px;}
 </style>
-
 <style type="text/css" media="screen">
 /* ACE */
     #editor { 
@@ -43,12 +41,10 @@ $api_uri = plugins_url().'/UiGEN-Display-API';
         left: 0;
     }
 </style>
-
 <script src="<?php echo $api_uri; ?>/js/uigen-display-api.js" type="text/javascript" charset="utf-8"></script>
 <script src="<?php echo $api_uri; ?>/js/jquery.json-editor.js" type="text/javascript" charset="utf-8"></script>
 <!--<script src="<?php echo $api_uri; ?>/js/ace.js" type="text/javascript" charset="utf-8"></script>-->
 <script src="http://cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ace.js" type="text/javascript" charset="utf-8"></script>
-
 <script>
 /* print JS CONST */
 <?php

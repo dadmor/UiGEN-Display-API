@@ -26,11 +26,105 @@ function UiGEN_DISPLAY_API_menu()
 
 
 function UiGEN_DISPLAY_API_callback(){
-	echo '<div class="wrap">';
- 		echo '<H2>UiGEN</h2>';
-  		echo '<H3>Display Framework API</h3>';
- 		echo 'http://getblockbox.com/executor_sandbox/wp-content/plugins/UiGEN-Display-API/doc';
-	echo '</div>';
+?>
+	<div class="wrap">
+ 		<H2>UiGEN</h2>
+  		<H3>Display Framework API</h3>
+ 		<pre>DOC:<br/>http://getblockbox.com/executor_sandbox/wp-content/plugins/UiGEN-Display-API/doc</pre>
+ 		<table class="wp-list-table widefat plugins">
+			<thead>
+				<tr>
+					<th scope="col" id="" class="manage-column column-name" style="">UiGEN Display API components</th>	<th scope="col" id="" class="manage-column column-name" style="">Access</th> <th scope="col" id="" class="manage-column column-name" style="">About</th>
+				</tr>
+			</thead>	
+
+			<tbody id="">
+				<tr>
+					<td id="" scope="col" class="manage-column column-name">
+						WP_Executor
+					</td>	
+					<td id="" scope="col" class="manage-column column-name">
+						Active
+					</td>
+					<td id="" scope="col" class="manage-column column-name">
+						http://getblockbox.com/executor_sandbox/			
+					</td>	
+							
+				</tr>
+				<tr>
+					<td id="" scope="col" class="manage-column column-name">
+						WP_Acrive_Spreadsheet
+					</td>	
+					<td id="" scope="col" class="manage-column column-name">
+						In Progress
+					</td>
+					<td id="" scope="col" class="manage-column column-name">
+								
+					</td>					
+				</tr>
+				<tr>
+					<td id="" scope="col" class="manage-column column-name">
+						WP_Tutorials
+					</td>
+					<td id="" scope="col" class="manage-column column-name">
+						In Progress
+					</td>	
+					<td id="" scope="col" class="manage-column column-name">
+								
+					</td>							
+				</tr>
+				<tr>
+					<td id="" scope="col" class="manage-column column-name">
+						UiGEN_AddOns
+					</td>	
+					<td id="" scope="col" class="manage-column column-name">
+						In Progress
+					</td>
+					<td id="" scope="col" class="manage-column column-name">
+								
+					</td>							
+				</tr>
+				<tr>
+					<td id="" scope="col" class="manage-column column-name">
+						UiGEN_Designer
+					</td>	
+					<td id="" scope="col" class="manage-column column-name">
+						In Progress
+					</td>	
+					<td id="" scope="col" class="manage-column column-name">
+								
+					</td>						
+				</tr>
+				<tr>
+					<td id="" scope="col" class="manage-column column-name">
+						UiGEN_MockupMe
+					</td>
+					<td id="" scope="col" class="manage-column column-name">
+						In Progress
+					</td>	
+					<td id="" scope="col" class="manage-column column-name">
+								
+					</td>							
+				</tr>
+				<tr>
+					<td id="" scope="col" class="manage-column column-name">
+						UiGEN_Definitions
+					</td>	
+					<td id="" scope="col" class="manage-column column-name">
+						In Progress
+					</td>	
+					<td id="" scope="col" class="manage-column column-name">
+								
+					</td>						
+				</tr>
+				
+
+				
+					
+			</tbody>
+		</table>
+	</div>
+<?php
 }
 
 register_activation_hook( __FILE__, 'my_first_install' );
